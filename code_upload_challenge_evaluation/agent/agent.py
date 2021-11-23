@@ -4,35 +4,20 @@ import grpc
 import os
 import pickle
 import time
+import os
+from fastai.vision import *
 
 time.sleep(30)
 
-LOCAL_EVALUATION = os.environ.get("LOCAL_EVALUATION")
 
-if LOCAL_EVALUATION:
-    channel = grpc.insecure_channel("environment:8085")
-else:
-    channel = grpc.insecure_channel("localhost:8085")
+def test_model():
+    #Step 1: Ping the model containter
 
-stub = evaluation_pb2_grpc.EnvironmentStub(channel)
+    #Step 2: Mount EFS test data
 
+    #Step 3: Pass test data endpoint to model container inference
 
-def pack_for_grpc(entity):
-    return pickle.dumps(entity)
+    # Step 4: Receive predictions and pass onto evaluation script
 
-
-def unpack_for_grpc(entity):
-    return pickle.loads(entity)
-
-
-flag = None
-
-while not flag:
-    base = unpack_for_grpc(
-        stub.act_on_environment(
-            evaluation_pb2.Package(SerializedEntity=pack_for_grpc(1))
-        ).SerializedEntity
-    )
-    flag = base["feedback"][2]
-    print("Agent Feedback", base["feedback"])
-    print("*" * 100)
+if __name__ == '__main__':
+    test_model()

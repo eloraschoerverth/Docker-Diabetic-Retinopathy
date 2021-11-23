@@ -1,14 +1,15 @@
 version: '3'
 services:
-  environment:
-    hostname: environment
-    env_file:
-      - docker/environment/docker.env
-    build:
-      context: ./
-      dockerfile: docker/environment/Dockerfile
-    ports:
-      - '8085:8085'
+  #don't need env container because static code upload
+  # environment:
+  #   hostname: environment
+  #   env_file:
+  #     - docker/environment/docker.env
+  #   build:
+  #     context: ./
+  #     dockerfile: docker/environment/Dockerfile
+  #   ports:
+  #     - '8085:8085'
 
   agent:
     hostname: agent
